@@ -35,7 +35,7 @@
       resize: none;
       background: transparent;
       border: none;
-      color: #000000;
+      color: #fff;
       font-size: 16px;
       outline: none;
       font-family: monospace;
@@ -48,6 +48,7 @@
   </div>
       <script>
         document.addEventListener('DOMContentLoaded', async () => {
+            const statusResult = document.getElementById('statusResult');
 
             try {
                 if (typeof window.electronAPI === 'undefined') {
@@ -55,10 +56,18 @@
 
                     const simulatedResult = { success: true, message: 'Janela atual protegida com sucesso.' };
 
-
+                    if (simulatedResult.success) {
+                        statusResult.classList.add('success');
+                    } else {
+                        statusResult.classList.add('error');
+                    }
                 } else {
                     const result = await window.electronAPI.protectCurrentWindow();
-
+                    if (result.success) {
+                        statusResult.classList.add('success');
+                    } else {
+                        statusResult.classList.add('error');
+                    }
                 }
             } catch (error) {
                 console.error('Erro ao proteger a janela:', error);
